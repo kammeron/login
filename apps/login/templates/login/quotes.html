@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quotes Dashboard</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+</head>
+<body>
+	<div class="d-block container-fluid">
+		<h1>Welcome, {{ request.session.user_first_name }}!</h1>
+		<a href="/myaccount/{{request.session.user_id}}/">Edit my account</a>
+		<a href="/logout">Logout</a>
+	</div>
+	<div class="container-fluid">
+		{% if messages %}
+		Errors:
+		<ul class="messages">
+		{% for message in messages %}
+			<li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+		{% endif %}
+	</div>
+	<div class="d-block container-fluid">
+		<h1>Add a quote!</h1>
+		<form action="/add_quote" method="post">
+			{% csrf_token %}
+			<p>Author:</p>
+			<input type="text" name="author">
+			<p>Quote:</p>
+			<input type="text" name="quote">
+			<button>Submit</button>
+		</form>
+	</div>
+	<div class="d-block container-fluid">
+		<h1>Quotes</h1>
+		{% for quote in quotes %}
+		<h4>{{quote.author}}</h4>
+		<p>{{quote.content}}</p>
+		<p>Posted by <a href="/user/{{quote.user_id}}">User {{quote.user_id}}</a></p>
+		<p>{{quote.like.all.count}} people like this</p>
+		<a href="/like_process/{{quote.id}}">Like</a>
+		{% if quote.user_id == request.session.user_id %}
+		<a href="/delete_quote/{{quote.id}}">Delete</a>
+		{% endif %}
+		{% endfor %}
+	</div>
+</body>
+</html>

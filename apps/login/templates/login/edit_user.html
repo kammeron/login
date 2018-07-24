@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Account</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+</head>
+<body>
+	<div class="d-block container-fluid">
+		<h1>Edit my account</h1>
+		<a href="/quotes">Home</a>
+		<a href="/logout">Logout</a>
+	</div>
+	<div class="d-block container-fluid">
+		<form method="post" action="/edit_process">
+			{% csrf_token %}
+			First Name:
+			<input type="text" name="first_name" class="d-block" placeholder="{{user.first_name}}">
+			Last Name:
+			<input type="text" name="last_name" class="d-block" placeholder="{{user.last_name}}">
+			Email:
+			<input type="text" name="email" class="d-block" placeholder="{{user.email}}">
+			<button>Update</button>
+		</form>
+	</div>
+</body>
+</html>
