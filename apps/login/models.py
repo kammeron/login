@@ -71,7 +71,7 @@ class QuoteManager(models.Manager):
 class Quote(models.Model):
 	author = models.CharField(max_length=255)
 	content = models.CharField(max_length=1000)
-	user = models.ForeignKey(User, related_name="user")
+	user = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
 	like = models.ManyToManyField(User, related_name="like")
 	objects = QuoteManager()
 	created_at = models.DateTimeField(auto_now_add=True)
